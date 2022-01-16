@@ -10,7 +10,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration
 public class SwaggerConfig {
- 
+
     @Bean
     public Docket scrumAllyApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -19,11 +19,11 @@ public class SwaggerConfig {
                 .build()
                 .apiInfo(apiInfo());
     }
- 
+
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Todo Rest API")
-                .description("Todo Rest API is a starter template for SpringBoot REST APIs")
+                .title("Clipystream Rest API")
+                .description("A short video clip sharing service")
                 .license("MIT License")
                 .licenseUrl("https://opensource.org/licenses/MIT")
                 .build();

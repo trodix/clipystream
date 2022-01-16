@@ -14,7 +14,7 @@
             <PatternLayout pattern="${LOG_DATEFORMAT_PATTERN}" disableAnsi="false" />
         </Console>
         <!-- Rolling File Appender -->
-        <RollingFile name="FileAppender" fileName="logs/clipystream.log" filePattern="logs/migration-%d{yyyy-MM-dd}-%i.log">
+        <RollingFile name="FileAppender" fileName="logs/clipystream.log" filePattern="logs/clipystream-%d{yyyy-MM-dd}-%i.log">
             <PatternLayout>
                 <Pattern>${LOG_PATTERN}</Pattern>
             </PatternLayout>

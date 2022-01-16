@@ -3,8 +3,6 @@ package com.trodix.clipystream.security.config;
 import java.util.Arrays;
 import com.trodix.clipystream.security.jwt.AuthEntryPointJwt;
 import com.trodix.clipystream.security.jwt.AuthTokenFilter;
-import com.trodix.clipystream.security.service.AuthService;
-import com.trodix.clipystream.security.service.RoleService;
 import com.trodix.clipystream.security.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -74,11 +72,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers(HttpMethod.GET, "/v2/api-docs", "/swagger-resources/**", "/swagger-ui/**", "/webjars/**",
-						"favicon.ico")
-				.permitAll().antMatchers("/api/public/**").permitAll().anyRequest().authenticated();
+		http.cors().and().csrf().disable()
+				.exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+				.and()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
+				.authorizeRequests()
+				.antMatchers(HttpMethod.GET, "/v2/api-docs", "/swagger-resources/**", "/swagger-ui/**", "/webjars/**", "favicon.ico").permitAll()
+				.antMatchers("/api/public/**").permitAll()
+				.anyRequest().authenticated();
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
