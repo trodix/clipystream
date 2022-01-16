@@ -9,11 +9,13 @@ import com.trodix.clipystream.core.exception.BadRequestException;
 import com.trodix.clipystream.core.exception.ResourceNotFoundException;
 import com.trodix.clipystream.core.exception.UnprocessableEntity;
 import com.trodix.clipystream.model.FileResponse;
+import com.trodix.clipystream.model.FileUploadRequestLimitUpdateDto;
 import com.trodix.clipystream.service.StorageService;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,7 +43,11 @@ public class FileController {
         }
 
         try {
-            final String fileObjectName = storageService.save(file);
+            final String requestIpAddress = getRealIpAddress(request);
+            final FileUploadRequestLimitUpdateDto fileUploadRequestLimitUpdateDto = new FileUploadRequestLimitUpdateDto();
+            fileUploadRequestLimitUpdateDto.setIpAddress(requestIpAddress);
+            fileUploadRequestLimitUpdateDto.setRequestFile(file);
+            final String fileObjectName = storageService.save(fileUploadRequestLimitUpdateDto);
 
             final String scheme = request.getScheme();
             final String host = request.getHeader(HttpHeaders.HOST);
@@ -74,6 +80,14 @@ public class FileController {
         } catch (final IOException e) {
             throw new ResourceNotFoundException("Unable to retreive file for uri: " + encodedUri);
         }
+    }
+
+    private String getRealIpAddress(final HttpServletRequest request) {
+        String remoteAddr = request.getHeader("X-FORWARDED-FOR");
+        if (!StringUtils.hasText(remoteAddr)) {
+            remoteAddr = request.getRemoteAddr();
+        }
+        return remoteAddr;
     }
 
 }

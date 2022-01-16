@@ -18,6 +18,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * This class generates a custom json response for Exceptions.
@@ -48,6 +49,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  * </pre>
  */
 @ControllerAdvice
+@Log4j2
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     // ===============================
@@ -120,6 +122,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         response.sendError(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
     }
 
+    @ExceptionHandler(FileUploadQuotaLimitExceededException.class)
+    public void handleFileUploadQuotaLimitExceededException(final FileUploadQuotaLimitExceededException exception, final HttpServletResponse response)
+            throws IOException {
+
+        response.sendError(HttpStatus.UNAUTHORIZED.value(), exception.getMessage());
+    }
+
     /**
      * Handle validation exceptions
      * 
@@ -153,6 +162,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public void handleGlobalException(final Exception exception, final HttpServletResponse response)
             throws IOException {
+
+        log.error(exception.getMessage(), exception);
 
         // response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "An internal server error occured");
         response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getMessage());
