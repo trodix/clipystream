@@ -11,8 +11,10 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import lombok.extern.log4j.Log4j2;
 
 @Configuration
+@Log4j2
 public class RedisConfig {
 
     @Value("${app.redis.host}")
