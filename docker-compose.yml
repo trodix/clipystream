@@ -1,0 +1,47 @@
+version: "3.9"
+services:
+
+  api:
+    image: trodix/clipystream
+    container_name: clipystream
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - "8000:8000"
+    environment:
+      SPRING_PROFILES_ACTIVE: "prod"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/clipystream"
+      APP_REDIS_HOST: "redis"
+      APP_STORAGE_PROVIDER_CLASS: "com.trodix.clipystream.provider.S3StorageProvider"
+      S3_BUCKET_PROVIDER_SECRET_KEY:
+      APP_STORAGE_PROVIDER_S3_ACCESS-KEY: "SCW09K8PC37FVC4MK2BD"
+      APP_STORAGE_PROVIDER_S3_REGION: "fr-par"
+      APP_STORAGE_PROVIDER_S3_ENDPOINT-BUCKET-URL: "https://s3.fr-par.scw.cloud"
+      APP_STORAGE_PROVIDER_S3_BUCKET-NAME: "clipystream"
+    volumes:
+      - /var/log/clipystream:/var/log
+    links:
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres
+    expose:
+      - "5432"
+    environment:
+      POSTGRES_DB: clipystream
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - /opt/clipystream/data:/var/lib/postgresql/data
+
+  redis:
+    image: redis
+    expose:
+      - "6379"
+    volumes:
+      - /opt/clipystream/redis/conf:/usr/local/etc/redis
