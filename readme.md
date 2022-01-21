@@ -4,9 +4,47 @@
 
 > A short video clip sharing service
 
+## Table of contents
+
+- [Clipystream Spring](#clipystream-spring)
+  - [Table of contents](#table-of-contents)
+  - [Development setup](#development-setup)
+  - [Backend](#backend)
+    - [Run dev server](#run-dev-server)
+    - [Database](#database)
+    - [Rate limit](#rate-limit)
+    - [Run](#run)
+    - [Swagger documentation](#swagger-documentation)
+  - [Tests](#tests)
+  - [Installation](#installation)
+  - [Default User](#default-user)
+  - [Configuration](#configuration)
+    - [Bucket configuration](#bucket-configuration)
+    - [Rate limit configuration](#rate-limit-configuration)
+    - [Allowed file extesions](#allowed-file-extesions)
+    - [Custom bucket provider](#custom-bucket-provider)
+  - [Frontend](#frontend)
+    - [Development server](#development-server)
+    - [Code scaffolding](#code-scaffolding)
+    - [Build](#build)
+    - [Running unit tests](#running-unit-tests)
+    - [Running end-to-end tests](#running-end-to-end-tests)
+    - [Further help](#further-help)
+
 ## Development setup
 
+This project contains 2 modules:
+
+- backend
+- frontend
+
+## Backend
+
 You can configure development properties in **src/resources/application-dev.properties** file.
+
+### Run dev server
+
+`cd backend && mvn clean install spring-boot:run`
 
 ### Database
 
@@ -198,8 +236,38 @@ If you want to allow more file extentions, you can change thoses values in the `
 app.storage.allowed-file-extentions=gif,webm,mp4,avi,mpeg
 ```
 
-## Custom bucket provider
+### Custom bucket provider
 
 If you need to use a bucket provider that is not complient with Amazon S3 protocol, you can implement your own provider from the `com.trodix.clipystream.core.interfaces.StorageProvider` interface.
 
 Then you need to load your provider in `application.properties` with `app.storage.provider.class = com.trodix.clipystream.provider.YourCustomProvider`
+
+## Frontend
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.0.
+
+### Development server
+
+> You need to be in the `frontend` directory in order to run the commands bellow
+
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+### Code scaffolding
+
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+### Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+### Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+### Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+
+### Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
