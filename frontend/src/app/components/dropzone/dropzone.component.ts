@@ -14,9 +14,16 @@ export class DropzoneComponent {
 
   constructor(private http: HttpClient) { }
 
-  uploadFile(files: File[]) {
+  uploadFile(files: File[] | any) {
+
+    if (!(files instanceof FileList)) {
+      files = files.target.files;
+    }
+
     if (files.length > 1) {
-      console.log("Seulement 1 fichier peut être upload à la fois");
+      this.onUploadErrorEvent.emit(new HttpErrorResponse({ error: "Seulement 1 fichier peut être upload à la fois" }));
+
+      return;
     }
 
     const formData = new FormData();

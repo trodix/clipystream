@@ -12,12 +12,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DropzoneComponent } from './components/dropzone/dropzone.component';
 import { DragDropDirective } from './directives/drag-drop.directive';
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DropzoneComponent,
-    DragDropDirective
+    DragDropDirective,
+    HomePageComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

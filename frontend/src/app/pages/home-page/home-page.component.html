@@ -1,0 +1,140 @@
+<div class="home-container">
+  <div class="top-container">
+    <div class="heading">
+      <h1>With <strong>Clipystream</strong>, share your videos easily</h1>
+      <p>
+        Start uploading your videos without any account,
+        <strong>for free</strong>. Videos are availlable
+        <strong>14 days</strong>. Video size limit is <strong>20 MB</strong>.
+      </p>
+    </div>
+    <div class="header-content-grid">
+      <div class="col1">
+        <img src="../assets/spaceship-2.svg" class="home-illustration" alt="" />
+      </div>
+      <div class="col2">
+        <!-- <button mat-raised-button>Start upload now</button> -->
+        <app-dropzone
+          class="app-dropzone"
+          (onUploadSuccessEvent)="showUploadSuccess($event)"
+          (onUploadErrorEvent)="showUploadError($event)"
+        ></app-dropzone>
+        <div
+          class="upload-response-dialog"
+          *ngIf="
+            uploadResponseDialog.successUpload ||
+            uploadResponseDialog.errorUpload
+          "
+        >
+          <div
+            class="success-upload"
+            *ngIf="uploadResponseDialog.successUpload"
+          >
+            <p>
+              <mat-icon class="success-icon">check_circle</mat-icon>
+              Your video is available with this link for 14 days
+            </p>
+            <div class="share-link-controls">
+              <input
+                type="text"
+                [(ngModel)]="uploadResponseDialog.successUpload.link"
+                readonly
+              />
+              <button
+                mat-raised-button
+                color="primary"
+                [cdkCopyToClipboard]="uploadResponseDialog.successUpload.link"
+                (cdkCopyToClipboardCopied)="(onCopiedLinkToClipboard)"
+              >
+                Copy video link
+              </button>
+            </div>
+          </div>
+          <div class="error-upload" *ngIf="uploadResponseDialog.errorUpload">
+            <p>
+              <mat-icon class="error-icon">error</mat-icon>
+              Error while uploading your video.
+              {{ uploadResponseDialog.errorUpload.error.error }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- <img class="buble-2" src="../assets/buble-2.svg" alt="buble" /> -->
+    </div>
+    <img class="divider-wave bottom" src="../assets/waves.svg" alt="" />
+  </div>
+  <div id="pricing" class="princing-container">
+    <img src="../assets/city.svg" alt="pricing" class="pricing-illustration" />
+    <h2>Pricing plans</h2>
+    <div class="pricing-plans-grid">
+      <div class="pricing-card">
+        <h3 class="plan-name">Free</h3>
+        <ul class="plan-infos">
+          <li>Max 20 MB / upload</li>
+          <li>Quota upload of 60 MB / day</li>
+          <li>Files deleted after 14 days</li>
+        </ul>
+        <span class="plan-price">$ 0 / month</span>
+      </div>
+      <div class="pricing-card">
+        <h3 class="plan-name">Standard</h3>
+        <ul class="plan-infos">
+          <li>Max 250 MB / upload</li>
+          <li>Quota upload of 500 MB / day</li>
+          <li>Files deleted after 14 days</li>
+        </ul>
+        <span class="plan-price">$ 5 / month</span>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <img class="divider-wave top" src="../assets/waves-footer.svg" alt="" />
+    <div class="footer">
+      <div class="footer-content1">
+        <div class="footer-columns-grid">
+          <div class="col1">
+            <h3>title 1</h3>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis,
+            dicta sequi? Officia eaque exercitationem excepturi aperiam,
+            corporis dolorem? Possimus nam laudantium ad debitis consequuntur
+            necessitatibus quos labore voluptatum optio deleniti!
+          </div>
+          <div class="col2">
+            <h3>title 2</h3>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis,
+            dicta sequi? Officia eaque exercitationem excepturi aperiam,
+            corporis dolorem? Possimus nam laudantium ad debitis consequuntur
+            necessitatibus quos labore voluptatum optio deleniti!
+          </div>
+          <div class="col3">
+            <h3>title 3</h3>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis,
+            dicta sequi? Officia eaque exercitationem excepturi aperiam,
+            corporis dolorem? Possimus nam laudantium ad debitis consequuntur
+            necessitatibus quos labore voluptatum optio deleniti!
+          </div>
+        </div>
+        <!-- <div class="footer-content-illustration">
+            <img src="../assets/fish.svg" alt="fish" class="fish-illustration" />
+          </div> -->
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-content">
+          <nav class="footer-nav">
+            <div class="brand dark">
+              <a href="/">
+                <img src="../assets/logo.svg" alt="logo" class="header-logo" />
+                Clipystream
+              </a>
+            </div>
+            <ul class="footer-nav-links">
+              <li><a href="/">Terms of Use</a></li>
+              <li><a href="/">Contact Us</a></li>
+            </ul>
+          </nav>
+          <p>2022 - Clipystream - All rights reserved</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
