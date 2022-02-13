@@ -1,11 +1,11 @@
 version: "3.9"
 services:
 
-  api:
+  app:
     image: trodix/clipystream
     container_name: clipystream
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile
     depends_on:
       - postgres
@@ -23,7 +23,7 @@ services:
       APP_STORAGE_PROVIDER_S3_ENDPOINT-BUCKET-URL: "https://s3.fr-par.scw.cloud"
       APP_STORAGE_PROVIDER_S3_BUCKET-NAME: "clipystream"
     volumes:
-      - /var/log/clipystream:/var/log
+      - /var/log/clipystream:/opt/clipystream/logs
     links:
       - postgres
       - redis
