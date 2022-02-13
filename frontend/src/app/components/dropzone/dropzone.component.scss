@@ -1,0 +1,32 @@
+.dropzone-container {
+  background-color: #cccccccc;
+  border: 5px dashed #eeeeee;
+  min-width: 300px;
+  min-height: 150px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  * {
+    font-size: 2em;
+  }
+  #parachute {
+    width: 64px;
+    path {
+      fill: #eeeeee;
+    }
+    animation: rotate 3s infinite ease-in-out alternate;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotateZ(10deg);
+  }
+  100% {
+    transform: rotateZ(-10deg);
+  }
+}

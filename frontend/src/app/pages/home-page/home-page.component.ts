@@ -10,11 +10,11 @@ export interface SuccessUploadResponse {
 }
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-home-page',
+  templateUrl: './home-page.component.html',
+  styleUrls: ['./home-page.component.scss']
 })
-export class AppComponent {
+export class HomePageComponent {
   title = 'clipystream-front';
 
   constructor() {

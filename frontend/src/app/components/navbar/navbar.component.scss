@@ -1,0 +1,23 @@
+.mat-toolbar {
+  background-color: transparent;
+
+  .center-nav a {
+    color: #3c3c3c;
+    padding: 5px 10px;
+    font-size: 0.8em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .center-nav a:hover {
+    text-decoration: underline;
+  }
+}
+
+.right-actions-nav a {
+  padding: 0 20px;
+
+  &:hover {
+    background-color: darken(#3c3c3c, 10);
+  }
+}

@@ -126,7 +126,7 @@ Postman tests are available at [./src/test/resources](./src/test/resources)
 
     ```properties
     [Unit]
-    Description=Todo SpringBoot Api
+    Description=Clipystream server
     After=syslog.target
 
     [Service]

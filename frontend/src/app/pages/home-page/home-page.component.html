@@ -1,0 +1,82 @@
+<div class="home-container">
+  <div class="top-container">
+    <div class="heading">
+      <h1>With <strong>Clipystream</strong>, share your videos easily</h1>
+      <p>
+        Start uploading your videos without any account,
+        <strong>for free</strong>. Videos are availlable
+        <strong>14 days</strong>. Video size limit is <strong>20 MB</strong>.
+      </p>
+    </div>
+    <div class="header-content-grid">
+      <div class="col1">
+        <img src="../assets/spaceship-2.svg" class="home-illustration" alt="" />
+      </div>
+      <div class="col2">
+        <app-dropzone
+          class="app-dropzone"
+          (onUploadSuccessEvent)="showUploadSuccess($event)"
+          (onUploadErrorEvent)="showUploadError($event)"
+        ></app-dropzone>
+        <div
+          class="upload-response-dialog"
+          *ngIf="
+            uploadResponseDialog.successUpload ||
+            uploadResponseDialog.errorUpload
+          "
+        >
+          <div
+            class="success-upload"
+            *ngIf="uploadResponseDialog.successUpload"
+          >
+            <p>
+              <mat-icon class="success-icon">check_circle</mat-icon>
+              Your video is available with this link for 14 days
+            </p>
+            <div class="share-link-controls">
+              <input
+                type="text"
+                [(ngModel)]="uploadResponseDialog.successUpload.link"
+                readonly
+              />
+              <button
+                mat-raised-button
+                color="primary"
+                [cdkCopyToClipboard]="uploadResponseDialog.successUpload.link"
+                (cdkCopyToClipboardCopied)="(onCopiedLinkToClipboard)"
+              >
+                Copy video link
+              </button>
+            </div>
+          </div>
+          <div class="error-upload" *ngIf="uploadResponseDialog.errorUpload">
+            <p>
+              <mat-icon class="error-icon">error</mat-icon>
+              Error while uploading your video.
+              {{ uploadResponseDialog.errorUpload.error.error }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <img class="divider-wave bottom" src="../assets/waves.svg" alt="" />
+  </div>
+
+  <footer>
+    <div class="footer">
+      <div class="footer-bottom">
+        <div class="footer-content">
+          <nav class="footer-nav">
+            <div class="brand dark">
+              <a href="/">
+                <img src="../assets/logo.svg" alt="logo" class="header-logo" />
+                Clipystream
+              </a>
+            </div>
+          </nav>
+          <p>2022 - Clipystream - All rights reserved</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
