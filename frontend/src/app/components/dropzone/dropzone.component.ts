@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { SuccessUploadResponse } from 'src/app/app.component';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dropzone',
@@ -29,7 +30,7 @@ export class DropzoneComponent {
     const formData = new FormData();
     formData.append('file', files[0]);
 
-    this.http.post<SuccessUploadResponse>("http://localhost:8000/api/public/file/upload", formData).subscribe(
+    this.http.post<SuccessUploadResponse>(`${environment.backendHost}/api/public/file/upload`, formData).subscribe(
       (res: SuccessUploadResponse) => this.onUploadSuccessEvent.emit(res),
       (err: HttpErrorResponse) => this.onUploadErrorEvent.emit(err)
     )
