@@ -4,7 +4,7 @@ default:
 	cat ./Makefile
 
 image:
-	docker build -t $(IMAGE_NAME) ./backend
+	mvn clean package -DskipTests && docker build -t $(IMAGE_NAME) ./backend
 
 start:
 	docker-compose up
@@ -13,7 +13,7 @@ stop:
 	docker-compose down
 
 dev-backend:
-	cd ./backend && mvn clean install spring-boot:run
+	cd ./backend && mvn clean install -DskipTests spring-boot:run
 
 test:
 	mvn clean test

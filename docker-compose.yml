@@ -1,6 +1,5 @@
 version: "3.9"
 services:
-
   app:
     image: trodix/clipystream
     container_name: clipystream
@@ -45,3 +44,40 @@ services:
       - "6379"
     volumes:
       - /opt/clipystream/redis/conf:/usr/local/etc/redis
+
+# Matomo
+  matomo-db:
+    image: mariadb
+    expose:
+      - "3306"
+    command: --max-allowed-packet=64MB
+    volumes:
+      - /opt/clipystream/matomo/data:/var/lib/mysql
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=
+    env_file:
+      - ./deployment/docker/matomo-db.env
+  matomo-app:
+    image: matomo:fpm-alpine
+    links:
+      - matomo-db
+    volumes:
+      - matomo_app_vol1:/var/www/html
+      - /opt/clipystream/matomo/config:/var/www/html/config
+    environment:
+      PHP_MEMORY_LIMIT: 2048M
+      MATOMO_DATABASE_HOST: matomo-db
+    env_file:
+      - ./deployment/docker/matomo-db.env
+
+  matomo-proxy:
+    image: nginx:alpine
+    volumes:
+      - matomo_app_vol1:/var/www/html:ro
+      - ./deployment/docker/matomo.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "8001:80"
+
+volumes:
+  matomo_app_vol1:
