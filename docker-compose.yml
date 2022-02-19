@@ -51,9 +51,8 @@ services:
     expose:
       - "3306"
     command: --max-allowed-packet=64MB
-    restart: always
     volumes:
-      - matomo_db_vol1:/var/lib/mysql
+      - /opt/clipystream/matomo/data:/var/lib/mysql
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_ROOT_PASSWORD=
@@ -65,6 +64,7 @@ services:
       - matomo-db
     volumes:
       - matomo_app_vol1:/var/www/html
+      - /opt/clipystream/matomo/config:/var/www/html/config
     environment:
       PHP_MEMORY_LIMIT: 2048M
       MATOMO_DATABASE_HOST: matomo-db
@@ -80,5 +80,4 @@ services:
       - "8001:80"
 
 volumes:
-  matomo_db_vol1:
   matomo_app_vol1:
