@@ -14,6 +14,9 @@ import { DropzoneComponent } from './components/dropzone/dropzone.component';
 import { DragDropDirective } from './directives/drag-drop.directive';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { NgxMatomoTrackerModule } from '@ngx-matomo/tracker';
+import { NgxMatomoRouterModule } from '@ngx-matomo/router';
+import { environment } from './../environments/environment';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+
+    NgxMatomoTrackerModule.forRoot({ trackerUrl: environment.matomoUrl, siteId: environment.matomoSiteId }),
+    NgxMatomoRouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
