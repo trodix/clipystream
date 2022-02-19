@@ -10,13 +10,14 @@
   - [Table of contents](#table-of-contents)
   - [Development setup](#development-setup)
   - [Backend](#backend)
-    - [Run dev server](#run-dev-server)
+    - [Run dev server (Backend only)](#run-dev-server-backend-only)
     - [Database](#database)
     - [Rate limit](#rate-limit)
-    - [Run](#run)
     - [Swagger documentation](#swagger-documentation)
   - [Tests](#tests)
   - [Installation](#installation)
+    - [Docker](#docker)
+    - [Bare metal](#bare-metal)
   - [Default User](#default-user)
   - [Configuration](#configuration)
     - [Bucket configuration](#bucket-configuration)
@@ -24,12 +25,15 @@
     - [Allowed file extesions](#allowed-file-extesions)
     - [Custom bucket provider](#custom-bucket-provider)
   - [Frontend](#frontend)
-    - [Development server](#development-server)
+    - [Development server (Frontend only)](#development-server-frontend-only)
     - [Code scaffolding](#code-scaffolding)
     - [Build](#build)
     - [Running unit tests](#running-unit-tests)
     - [Running end-to-end tests](#running-end-to-end-tests)
     - [Further help](#further-help)
+  - [Matomo analytics](#matomo-analytics)
+    - [Matomo Development setup](#matomo-development-setup)
+    - [Matomo Production setup](#matomo-production-setup)
 
 ## Development setup
 
@@ -42,9 +46,13 @@ This project contains 2 modules:
 
 You can configure development properties in **src/resources/application-dev.properties** file.
 
-### Run dev server
+### Run dev server (Backend only)
+
+> A REDIS server must be listening on port 6379
 
 `cd backend && mvn clean install spring-boot:run`
+
+You can access the api at <http://localhost:8000/api>
 
 ### Database
 
@@ -66,12 +74,6 @@ app.redis.password=password
 app.redis.timeout=60000
 ```
 
-### Run
-
-Run the app with maven: `mvn spring-boot:run`
-
-You can access the api at <http://localhost:8000/api>
-
 ### Swagger documentation
 
 For specs, go to <http://localhost:8000/v2/api-docs>
@@ -83,6 +85,18 @@ For Swagger UI, go to <http://localhost:8000/swagger-ui/>
 Postman tests are available at [./src/test/resources](./src/test/resources)
 
 ## Installation
+
+### Docker
+
+1. Build the image
+
+    `make image`
+
+2. Run the image
+
+    `make start`
+
+### Bare metal
 
 1. Build the project to generate the **.jar** file
 
@@ -246,11 +260,11 @@ Then you need to load your provider in `application.properties` with `app.storag
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.0.
 
-### Development server
+### Development server (Frontend only)
 
-> You need to be in the `frontend` directory in order to run the commands bellow
+`make dev-frontend`
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ### Code scaffolding
 
@@ -271,3 +285,15 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ### Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Matomo analytics
+
+[Matomo](https://matomo.org) is used for analytics
+
+### Matomo Development setup
+
+Frontend will try to connect to Matomo on [//localhost:8001](http//localhost:8001)
+
+### Matomo Production setup
+
+Frontend will try to connect to Matomo on [//matomo.clipystream.com](http//matomo.clipystream.com)
