@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  backendHost: "http://localhost:8000",
   matomoUrl: "//localhost:8001",
   matomoSiteId: "1"
 };
