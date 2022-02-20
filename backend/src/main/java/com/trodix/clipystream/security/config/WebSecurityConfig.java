@@ -1,10 +1,12 @@
 package com.trodix.clipystream.security.config;
 
 import java.util.Arrays;
+import java.util.List;
 import com.trodix.clipystream.security.jwt.AuthEntryPointJwt;
 import com.trodix.clipystream.security.jwt.AuthTokenFilter;
 import com.trodix.clipystream.security.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -29,6 +31,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 		// jsr250Enabled = true,
 		prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Value("#{'${app.cors.methods}'.split(',')}")
+	private List<String> allowedCorsMethods;
+
+	@Value("#{'${app.cors.origins}'.split(',')}")
+	private List<String> allowedCorsOrigins;
 
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
@@ -62,11 +70,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		final CorsConfiguration config = new CorsConfiguration();
 		config.applyPermitDefaultValues();
-		config.setAllowedMethods(
-				Arrays.asList(new String[] {"GET", "POST", "PUT", "DELETE"}));
-		source.registerCorsConfiguration(
-				"/api/**",
-				config);
+		config.setAllowedMethods(allowedCorsMethods);
+		config.setAllowedOrigins(allowedCorsOrigins);
+		source.registerCorsConfiguration("/api/**", config);
 		return source;
 	}
 
