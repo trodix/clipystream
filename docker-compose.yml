@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  app:
+  clipystream-app:
     image: trodix/clipystream
     container_name: clipystream
     build:
@@ -13,6 +13,7 @@ services:
       - "8000:8000"
     environment:
       SPRING_PROFILES_ACTIVE: "prod"
+      APP_CORS_ORIGINS: "clipystream.com"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/clipystream"
       APP_REDIS_HOST: "redis"
       APP_STORAGE_PROVIDER_CLASS: "com.trodix.clipystream.provider.S3StorageProvider"
