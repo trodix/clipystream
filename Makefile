@@ -7,13 +7,13 @@ image:
 	mvn clean package -DskipTests && docker build -t $(IMAGE_NAME) ./backend
 
 start:
-	docker-compose up
+	docker-compose --profile prod up
 
 stop:
 	docker-compose down
 
 dev-backend:
-	cd ./backend && mvn clean install -DskipTests spring-boot:run
+	docker-compose --profile dev up --remove-orphans && cd ./backend && mvn clean install -DskipTests spring-boot:run
 
 test:
 	mvn clean test

@@ -9,7 +9,6 @@ import java.util.List;
 import com.trodix.clipystream.core.exception.FileUploadQuotaLimitExceededException;
 import com.trodix.clipystream.core.exception.ResourceNotFoundException;
 import com.trodix.clipystream.core.interfaces.StorageProvider;
-import com.trodix.clipystream.model.FileUploadRequestLimitDto;
 import com.trodix.clipystream.model.FileUploadRequestLimitUpdateDto;
 import com.trodix.clipystream.repository.FileUploadRequestLimitRepository;
 import org.apache.commons.io.FileUtils;
@@ -34,12 +33,15 @@ public class StorageService {
     @Value("${app.storage.max-quota-per-day-mb}")
     public int maxFileUploadQuotaPerDay;
 
-    public String save(final FileUploadRequestLimitUpdateDto fileUploadRequestLimitUpdateDto) throws IOException, IllegalArgumentException, FileUploadQuotaLimitExceededException {
+    public String save(final FileUploadRequestLimitUpdateDto fileUploadRequestLimitUpdateDto)
+            throws IOException, IllegalArgumentException, FileUploadQuotaLimitExceededException {
         final MultipartFile requestFile = fileUploadRequestLimitUpdateDto.getRequestFile();
 
-        
+
         if (!hasQuota(fileUploadRequestLimitUpdateDto)) {
-            throw new FileUploadQuotaLimitExceededException(MessageFormat.format("Your file upload size quota ({0} MB) has exceeded. The quota is reset every 24 hours after the first file upload.", maxFileUploadQuotaPerDay));
+            throw new FileUploadQuotaLimitExceededException(
+                    MessageFormat.format("Your file upload size quota ({0} MB) has exceeded. The quota is reset every 24 hours after the first file upload.",
+                            maxFileUploadQuotaPerDay));
         }
 
         final String baseName = FilenameUtils.getBaseName(requestFile.getOriginalFilename());
@@ -68,7 +70,8 @@ public class StorageService {
     }
 
     public boolean hasQuota(final FileUploadRequestLimitUpdateDto requestDto) {
-        return fileUploadRequestLimitRepository.getQuota(requestDto.getIpAddress()) + requestDto.getRequestFile().getSize() < maxFileUploadQuotaPerDay * 1024 * 1024;
+        return fileUploadRequestLimitRepository.getQuota(requestDto.getIpAddress()) + requestDto.getRequestFile().getSize() < maxFileUploadQuotaPerDay * 1024
+                * 1024;
     }
 
 }

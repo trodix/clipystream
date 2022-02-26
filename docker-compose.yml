@@ -1,11 +1,9 @@
 version: "3.9"
 services:
   clipystream-app:
+    profiles: ["prod"]
     image: trodix/clipystream
     container_name: clipystream
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
     depends_on:
       - postgres
       - redis
@@ -27,8 +25,8 @@ services:
     links:
       - postgres
       - redis
-
   postgres:
+    profiles: ["prod"]
     image: postgres
     expose:
       - "5432"
@@ -40,9 +38,20 @@ services:
       - /opt/clipystream/data:/var/lib/postgresql/data
 
   redis:
+    profiles: ["prod"]
     image: redis
     expose:
       - "6379"
+    volumes:
+      - /opt/clipystream/redis/conf:/usr/local/etc/redis
+
+  redis-dev:
+    profiles: ["dev"]
+    image: redis
+    expose:
+      - "6379"
+    ports:
+      - "6379:6379"
     volumes:
       - /opt/clipystream/redis/conf:/usr/local/etc/redis
 
