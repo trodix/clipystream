@@ -2,7 +2,7 @@ version: "3.9"
 services:
   clipystream-app:
     profiles: ["prod"]
-    image: trodix/clipystream
+    image: ghcr.io/trodix/clipystream:latest
     container_name: clipystream
     depends_on:
       - postgres
