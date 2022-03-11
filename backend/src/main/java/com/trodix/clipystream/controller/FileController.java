@@ -50,7 +50,7 @@ public class FileController {
             final String fileObjectName = storageService.save(fileUploadRequestLimitUpdateDto);
 
             final String scheme = request.getScheme();
-            final String host = request.getHeader(HttpHeaders.HOST);
+            final String host = getRealHost(request);
             final String fileUrl = MessageFormat.format("{0}://{1}{2}{3}", scheme, host, "/api/public/file/", fileObjectName);
 
             final FileResponse response = new FileResponse();
@@ -88,6 +88,14 @@ public class FileController {
             remoteAddr = request.getRemoteAddr();
         }
         return remoteAddr;
+    }
+
+    private String getRealHost(final HttpServletRequest request) {
+        String realHost = request.getHeader("X-FORWARDED-HOST");
+        if (!StringUtils.hasText(realHost)) {
+            realHost = request.getRemoteHost();
+        }
+        return realHost;
     }
 
 }
