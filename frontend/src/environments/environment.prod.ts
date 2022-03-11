@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  backendHost: "https://clipystream.com",
+  backendHost: "//clipystream.com",
   matomoUrl: "//matomo.clipystream.com",
   matomoSiteId: "1"
 };
